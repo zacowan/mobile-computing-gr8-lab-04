@@ -44,11 +44,22 @@ void setup()
 }
 
 /**
+ * @brief Updates currMode based on the RBG LED color
+ *
+ */
+void updateMode()
+{
+    // TODO
+}
+
+/**
  * @brief Defines what the pi should do every "clock" tick
  *
  */
 void loop()
 {
+    updateMode();
+
     switch (currMode)
     {
     case Mode::OFF:
