@@ -26,7 +26,7 @@ using namespace std;
  */
 
 // The current mode of the device
-Mode currMode = Mode::AUTO;
+volatile Mode currMode = Mode::AUTO;
 
 /**
  * END state variables
