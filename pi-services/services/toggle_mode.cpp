@@ -5,7 +5,7 @@
 using namespace std;
 
 /**
- * @brief Changes the color of the RBG LED to update the "mode" of the light.
+ * @brief Changes the color of the RBG LED to update the mode of the device.
  *
  * @param newMode the mode to set the device to.
  * A string that is one of "OFF" | "AUTO" | "ON".
