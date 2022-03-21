@@ -1,6 +1,7 @@
 #include <iostream>
 #include <wiringPi.h>
 #include "mode.cpp"
+#include "handle_with_debounce.cpp"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ using namespace std;
 #define LOOP_DELAY 100
 
 // Define all of the pin numbers below
-#define A_PIN 27
+#define PIN_BTN 27
 
 /**
  * END configuration constants
@@ -27,11 +28,21 @@ using namespace std;
 
 // The current mode of the device
 volatile Mode currMode = Mode::AUTO;
+volatile high_resolution_clock buttonPressTimestamp = high_resolution_clock::now();
 
 /**
  * END state variables
  * -----------------------------------------------------------------------------
  */
+
+/**
+ * @brief Changes the RGB LED color after a button press to change the mode
+ *
+ */
+void changeMode()
+{
+    cout << "Changed mode" << endl;
+}
 
 /**
  * @brief Sets up raspberry pi board, pins, and interrupt handlers
@@ -40,7 +51,8 @@ volatile Mode currMode = Mode::AUTO;
 void setup()
 {
     // TODO: setup input pins for monitoring sensor data and voltage on RGB LED
-    // TODO: setup interrupt handler for button
+    // Setup interrupt handler for button
+    wiringPiISR(PIN_BTN, INT_EDGE_RISING, handleWithDebounce(&changeMode, 250, buttonPressTimestamp));
 }
 
 /**
