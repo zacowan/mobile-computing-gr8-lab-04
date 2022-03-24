@@ -14,9 +14,9 @@ using namespace std::chrono;
  */
 
 // Determines the "clock" of the pi
-#define LOOP_DELAY 100
+#define LOOP_DELAY 30
 
-#define DEBOUNCE 250
+#define DEBOUNCE 240
 
 // Define all of the pin numbers below
 #define PIN_BTN 24
