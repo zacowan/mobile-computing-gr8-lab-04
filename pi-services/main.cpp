@@ -38,12 +38,25 @@ using namespace std;
 
 // The current mode of the device
 volatile Mode currMode = Mode::AUTO;
-volatile high_resolution_clock buttonPressTimestamp = high_resolution_clock::now();
+volatile auto buttonPressTimestamp = high_resolution_clock::now();
 
 /**
  * END state variables
  * -----------------------------------------------------------------------------
  */
+
+void handleButtonPress()
+{
+    auto now = high_resolution_clock::now();
+    double elapsed_time_ms = chrono::duration<double, std::milli>(now, buttonPressTimestamp).count();
+
+    if (elapsed_time_ms >= db)
+    {
+        changeMode();
+    }
+
+    buttonPressTimestamp = high_resolution_clock::now();
+}
 
 /**
  * @brief Changes the RGB LED color after a button press to change the mode
