@@ -13,6 +13,8 @@ using namespace std;
 // Determines the "clock" of the pi
 #define LOOP_DELAY 100
 
+#define DEBOUNCE 250
+
 // Define all of the pin numbers below
 #define PIN_BTN 3
 
@@ -50,19 +52,6 @@ volatile auto buttonPressTimestamp = high_resolution_clock::now();
  * -----------------------------------------------------------------------------
  */
 
-void handleButtonPress()
-{
-    auto now = high_resolution_clock::now();
-    double elapsed_time_ms = chrono::duration<double, std::milli>(now, buttonPressTimestamp).count();
-
-    if (elapsed_time_ms >= db)
-    {
-        changeMode();
-    }
-
-    buttonPressTimestamp = high_resolution_clock::now();
-}
-
 /**
  * @brief Changes the RGB LED color after a button press to change the mode
  *
@@ -93,6 +82,19 @@ void changeMode()
     }
 }
 
+void handleButtonPress()
+{
+    auto now = high_resolution_clock::now();
+    double elapsed_time_ms = chrono::duration<double, std::milli>(now, buttonPressTimestamp).count();
+
+    if (elapsed_time_ms >= DEBOUNCE)
+    {
+        changeMode();
+    }
+
+    buttonPressTimestamp = high_resolution_clock::now();
+}
+
 /**
  * @brief Sets up raspberry pi board, pins, and interrupt handlers
  *
@@ -112,7 +114,7 @@ void setup()
     pinMode(PIN_B_IN, INPUT);
     pinMode(PIN_B_OUT, OUTPUT);
     // Setup interrupt handler for button
-    wiringPiISR(PIN_BTN, INT_EDGE_RISING, handleWithDebounce(&changeMode, 250, buttonPressTimestamp));
+    wiringPiISR(PIN_BTN, INT_EDGE_RISING, handleButtonPress);
 }
 
 /**
