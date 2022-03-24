@@ -63,6 +63,7 @@ void changeMode()
     if (currMode == Mode::OFF)
     {
         // Swap to auto
+        cout << "Swapping mode to AUTO" << endl;
         digitalWrite(PIN_R_OUT, RGB_OFF);
         digitalWrite(PIN_G_OUT, RGB_OFF);
         digitalWrite(PIN_B_OUT, RGB_ON);
@@ -70,6 +71,7 @@ void changeMode()
     else if (currMode == Mode::AUTO)
     {
         // Swap to on
+        cout << "Swapping mode to ON" << endl;
         digitalWrite(PIN_R_OUT, RGB_OFF);
         digitalWrite(PIN_G_OUT, RGB_ON);
         digitalWrite(PIN_B_OUT, RGB_OFF);
@@ -77,6 +79,7 @@ void changeMode()
     else
     {
         // Swap to off
+        cout << "Swapping mode to OFF" << endl;
         digitalWrite(PIN_R_OUT, RGB_ON);
         digitalWrite(PIN_G_OUT, RGB_OFF);
         digitalWrite(PIN_B_OUT, RGB_OFF);
@@ -85,11 +88,14 @@ void changeMode()
 
 void handleButtonPress()
 {
+    cout << "Button pressed" << endl;
+
     auto now = high_resolution_clock::now();
     double elapsed_time_ms = duration_cast<duration<double>>(now - buttonPressTimestamp).count() * 1000;
 
     if (elapsed_time_ms >= DEBOUNCE)
     {
+        cout << "Changing mode" << endl;
         changeMode();
     }
 
@@ -102,6 +108,7 @@ void handleButtonPress()
  */
 void setup()
 {
+    cout << "Starting setup" << endl;
     // Setup btn
     pinMode(PIN_BTN, INPUT);
     // Setup green LED
@@ -116,6 +123,7 @@ void setup()
     pinMode(PIN_B_OUT, OUTPUT);
     // Setup interrupt handler for button
     wiringPiISR(PIN_BTN, INT_EDGE_RISING, handleButtonPress);
+    cout << "Setup complete" << endl;
 }
 
 /**
