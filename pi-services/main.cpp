@@ -81,7 +81,18 @@ void changeMode()
  */
 void setup()
 {
-    // TODO: setup input pins for monitoring sensor data and voltage on RGB LED
+    // Setup btn
+    pinMode(PIN_BTN, INPUT);
+    // Setup green LED
+    pinMode(PIN_LED_IN, INPUT);
+    pinMode(PIN_LED_OUT, OUTPUT);
+    // Setup RGB LED
+    pinMode(PIN_R_IN, INPUT);
+    pinMode(PIN_R_OUT, OUTPUT);
+    pinMode(PIN_G_IN, INPUT);
+    pinMode(PIN_G_OUT, OUTPUT);
+    pinMode(PIN_B_IN, INPUT);
+    pinMode(PIN_B_OUT, OUTPUT);
     // Setup interrupt handler for button
     wiringPiISR(PIN_BTN, INT_EDGE_RISING, handleWithDebounce(&changeMode, 250, buttonPressTimestamp));
 }
