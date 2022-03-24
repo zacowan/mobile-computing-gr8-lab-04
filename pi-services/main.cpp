@@ -132,6 +132,7 @@ void setup()
  */
 void updateMode()
 {
+    cout << "Inside updateMode" << endl;
     // Read which LED color is "ON" (LOW)
     if (digitalRead(PIN_R_IN) == RGB_ON)
     {
@@ -156,7 +157,11 @@ void updateMode()
  */
 void loop()
 {
+    cout << "Inside loop" << endl;
+
     updateMode();
+
+    cout << "currMode = " << currMode << endl;
 
     switch (currMode)
     {
