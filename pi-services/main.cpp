@@ -15,9 +15,12 @@ using namespace std;
 
 // Define all of the pin numbers below
 #define PIN_BTN 27
-#define PIN_R_IN 1
-#define PIN_G_IN 2
-#define PIN_B_IN 3
+#define PIN_R_OUT 14
+#define PIN_G_OUT 15
+#define PIN_B_OUT 18
+#define PIN_R_IN 14
+#define PIN_G_IN 15
+#define PIN_B_IN 18
 
 /**
  * END configuration constants
@@ -44,7 +47,19 @@ volatile high_resolution_clock buttonPressTimestamp = high_resolution_clock::now
  */
 void changeMode()
 {
-    cout << "Changed mode" << endl;
+    // Swap between OFF (RED) -> AUTO (BLUE) -> ON (GREEN)
+    if (currMode == Mode::OFF)
+    {
+        // Swap to auto
+    }
+    else if (currMode == Mode::AUTO)
+    {
+        // Swap to on
+    }
+    else
+    {
+        // Swap to off
+    }
 }
 
 /**
@@ -64,6 +79,22 @@ void setup()
  */
 void updateMode()
 {
+    // Read which LED color is "ON" (LOW)
+    if (digitalRead(PIN_R_IN) == LOW)
+    {
+        // Red is on
+        currMode = Mode::OFF;
+    }
+    else if (digitalRead(PIN_G_IN) == LOW)
+    {
+        // Green is on
+        currMode = Mode::ON;
+    }
+    else
+    {
+        // Blue is on
+        currMode = Mode::AUTO;
+    }
 }
 
 /**
