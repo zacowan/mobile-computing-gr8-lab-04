@@ -85,7 +85,7 @@ void changeMode()
 void handleButtonPress()
 {
     auto now = high_resolution_clock::now();
-    double elapsed_time_ms = chrono::duration<double, std::milli>(now, buttonPressTimestamp).count();
+    double elapsed_time_ms = chrono::duration<double, std::milli>(now - buttonPressTimestamp).count();
 
     if (elapsed_time_ms >= DEBOUNCE)
     {
