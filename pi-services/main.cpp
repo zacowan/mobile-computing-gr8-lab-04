@@ -26,6 +26,11 @@ using namespace std;
 #define PIN_G_IN 27
 #define PIN_B_IN 22
 
+#define LED_ON HIGH
+#define LED_OFF LOW
+#define RGB_ON LOW
+#define RGB_OFF HIGH
+
 /**
  * END configuration constants
  * -----------------------------------------------------------------------------
@@ -68,23 +73,23 @@ void changeMode()
     if (currMode == Mode::OFF)
     {
         // Swap to auto
-        digitalWrite(PIN_R_OUT, HIGH);
-        digitalWrite(PIN_G_OUT, HIGH);
-        digitalWrite(PIN_B_OUT, LOW);
+        digitalWrite(PIN_R_OUT, RGB_OFF);
+        digitalWrite(PIN_G_OUT, RGB_OFF);
+        digitalWrite(PIN_B_OUT, RGB_ON);
     }
     else if (currMode == Mode::AUTO)
     {
         // Swap to on
-        digitalWrite(PIN_R_OUT, HIGH);
-        digitalWrite(PIN_G_OUT, LOW);
-        digitalWrite(PIN_B_OUT, HIGH);
+        digitalWrite(PIN_R_OUT, RGB_OFF);
+        digitalWrite(PIN_G_OUT, RGB_ON);
+        digitalWrite(PIN_B_OUT, RGB_OFF);
     }
     else
     {
         // Swap to off
-        digitalWrite(PIN_R_OUT, LOW);
-        digitalWrite(PIN_G_OUT, HIGH);
-        digitalWrite(PIN_B_OUT, HIGH);
+        digitalWrite(PIN_R_OUT, RGB_ON);
+        digitalWrite(PIN_G_OUT, RGB_OFF);
+        digitalWrite(PIN_B_OUT, RGB_OFF);
     }
 }
 
@@ -117,12 +122,12 @@ void setup()
 void updateMode()
 {
     // Read which LED color is "ON" (LOW)
-    if (digitalRead(PIN_R_IN) == LOW)
+    if (digitalRead(PIN_R_IN) == RGB_ON)
     {
         // Red is on
         currMode = Mode::OFF;
     }
-    else if (digitalRead(PIN_G_IN) == LOW)
+    else if (digitalRead(PIN_G_IN) == RGB_ON)
     {
         // Green is on
         currMode = Mode::ON;
@@ -145,18 +150,29 @@ void loop()
     switch (currMode)
     {
     case Mode::OFF:
-        // TODO: turn the standard LED is off
-        // TODO: turn the RGB LED to OFF_COLOR
+        // Turn the standard LED off
+        digitalWrite(PIN_LED_OUT, LED_OFF);
+        // Turn the RGB LED to RED to signal OFF
+        digitalWrite(PIN_R_OUT, RGB_ON);
+        digitalWrite(PIN_G_OUT, RGB_OFF);
+        digitalWrite(PIN_B_OUT, RGB_OFF);
         break;
 
     case Mode::AUTO:
         // TODO: turn standard LED on/off based on sensor data
-        // TODO: turn the RGB LED to AUTO_COLOR
+        // Turn the RGB LED to BLUE to signal AUTO
+        digitalWrite(PIN_R_OUT, RGB_OFF);
+        digitalWrite(PIN_G_OUT, RGB_OFF);
+        digitalWrite(PIN_B_OUT, RGB_ON);
         break;
 
     case Mode::ON:
-        // TODO: turn the standard LED is on
-        // TODO: turn the RGB LED to ON_COLOR
+        // Turn the standard LED is on
+        digitalWrite(PIN_LED_OUT, LED_ON);
+        // Turn the RGB LED to GREEN to signal ON
+        digitalWrite(PIN_R_OUT, RGB_OFF);
+        digitalWrite(PIN_G_OUT, RGB_ON);
+        digitalWrite(PIN_B_OUT, RGB_OFF);
         break;
 
     default:
