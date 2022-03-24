@@ -1,8 +1,8 @@
 import RPi.GPIO as GPIO  # Import Raspberry Pi GPIO library
 from time import sleep  # Import the sleep function from the time module
 
-pin_r = 10
-pin_g = 11
+pin_r = 8
+pin_g = 10
 pin_b = 12
 
 GPIO.setwarnings(False)  # Ignore warning for now
