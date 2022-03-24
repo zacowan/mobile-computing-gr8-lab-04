@@ -15,12 +15,16 @@ using namespace std;
 
 // Define all of the pin numbers below
 #define PIN_BTN 27
+
+#define PIN_LED_OUT 2
+#define PIN_LED_IN 10
+
 #define PIN_R_OUT 14
 #define PIN_G_OUT 15
 #define PIN_B_OUT 18
-#define PIN_R_IN 14
-#define PIN_G_IN 15
-#define PIN_B_IN 18
+#define PIN_R_IN 17
+#define PIN_G_IN 27
+#define PIN_B_IN 22
 
 /**
  * END configuration constants
