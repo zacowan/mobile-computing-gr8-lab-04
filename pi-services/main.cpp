@@ -1,6 +1,7 @@
 #include <iostream>
 #include <wiringPi.h>
 #include <chrono>
+#include <signal.h>
 #include "mode.cpp"
 #include "color.cpp"
 
@@ -114,7 +115,7 @@ void handleButtonPress()
 
     if (elapsedTimeMs >= DEBOUNCE)
     {
-        cout << "Button press measured with elapsed time between of " << elapsedTimeMs << "ms" endl;
+        cout << "Button press measured with elapsed time between of " << elapsedTimeMs << "ms" << endl;
         changeMode();
     }
 
@@ -205,6 +206,35 @@ void loop()
     }
 }
 
+/**
+ * @brief Handles resetting the state of the LEDs before exiting
+ *
+ */
+void cleanup() {
+    digitalWrite(PIN_R, RGB_OFF);
+    digitalWrite(PIN_G, RGB_OFF);
+    digitalWrite(PIN_B, RGB_OFF);
+    digitalWrite(PIN_LED, OFF);
+}
+
+void handleSigInt(int s) {
+    cout << "Caught signal " << s << endl;
+    cleanup();
+    exit(0);
+}
+
+/**
+ * @brief Sets up interrupt handler for ctrl+c
+ *
+ */
+void setupSigIntHandler() {
+    struct sigaction sigIntHandler;
+    sigIntHandler.sa_handler = handleSigInt;
+    sigemptyset(&sigIntHandler.sa_mask);
+    sigIntHandler.sa_flags = 0;
+    sigaction(SIGINT, &sigIntHandler, NULL);
+}
+
 int main()
 {
     // Setup wiringPi
@@ -215,6 +245,8 @@ int main()
     }
     // Setup board
     setup();
+    // Setup ctrl+c catcher
+    setupSigIntHandler();
     // Start the program
     while (true)
     {
