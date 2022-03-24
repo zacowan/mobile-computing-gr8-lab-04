@@ -1,2 +1,2 @@
 main: main.cpp mode.cpp
-	g++ -o main main.cpp mode.cpp -lwiringPi
+	g++ -o main.o main.cpp mode.cpp color.cpp -lwiringPi

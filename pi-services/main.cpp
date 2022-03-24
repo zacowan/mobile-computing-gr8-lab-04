@@ -2,6 +2,7 @@
 #include <wiringPi.h>
 #include <chrono>
 #include "mode.cpp"
+#include "color.cpp"
 
 using namespace std;
 using namespace std::chrono;
@@ -17,17 +18,13 @@ using namespace std::chrono;
 #define DEBOUNCE 250
 
 // Define all of the pin numbers below
-#define PIN_BTN 12
+#define PIN_BTN 24
 
-#define PIN_LED_OUT 18
-#define PIN_LED_IN 17
+#define PIN_LED 23
 
-#define PIN_R_OUT 16
-#define PIN_G_OUT 20
-#define PIN_B_OUT 21
-#define PIN_R_IN 13
-#define PIN_G_IN 19
-#define PIN_B_IN 26
+#define PIN_R 16
+#define PIN_G 20
+#define PIN_B 21
 
 #define LED_ON HIGH
 #define LED_OFF LOW
@@ -45,13 +42,37 @@ using namespace std::chrono;
  */
 
 // The current mode of the device
-volatile Mode currMode = Mode::AUTO;
+auto currMode = Mode::ON;
 auto buttonPressTimestamp = high_resolution_clock::now();
 
 /**
  * END state variables
  * -----------------------------------------------------------------------------
  */
+
+/**
+ * @brief Handles changing the RGB LED color
+ *
+ * @param Color The color to set
+ */
+void changeRGBColor(Color color) {
+    if (color == Color::RED) {
+        // Change to red
+        digitalWrite(PIN_R, RGB_ON);
+        digitalWrite(PIN_G, RGB_OFF);
+        digitalWrite(PIN_B, RGB_OFF);
+    } else if (color == Color::GREEN) {
+        // Change to green
+        digitalWrite(PIN_R, RGB_OFF);
+        digitalWrite(PIN_G, RGB_ON);
+        digitalWrite(PIN_B, RGB_OFF);
+    } else {
+        // Change to blue
+        digitalWrite(PIN_R, RGB_OFF);
+        digitalWrite(PIN_G, RGB_OFF);
+        digitalWrite(PIN_B, RGB_ON);
+    }
+}
 
 /**
  * @brief Changes the RGB LED color after a button press to change the mode
@@ -63,41 +84,37 @@ void changeMode()
     if (currMode == Mode::OFF)
     {
         // Swap to auto
-        cout << "Swapping mode to AUTO" << endl;
-        digitalWrite(PIN_R_OUT, RGB_OFF);
-        digitalWrite(PIN_G_OUT, RGB_OFF);
-        digitalWrite(PIN_B_OUT, RGB_ON);
+        cout << "Changing mode to AUTO" << endl;
+        changeRGBColor(Color::BLUE);
     }
     else if (currMode == Mode::AUTO)
     {
         // Swap to on
-        cout << "Swapping mode to ON" << endl;
-        digitalWrite(PIN_R_OUT, RGB_OFF);
-        digitalWrite(PIN_G_OUT, RGB_ON);
-        digitalWrite(PIN_B_OUT, RGB_OFF);
+        cout << "Changing mode to ON" << endl;
+        changeRGBColor(Color::GREEN);
     }
     else
     {
         // Swap to off
-        cout << "Swapping mode to OFF" << endl;
-        digitalWrite(PIN_R_OUT, RGB_ON);
-        digitalWrite(PIN_G_OUT, RGB_OFF);
-        digitalWrite(PIN_B_OUT, RGB_OFF);
+        cout << "Changing mode to OFF" << endl;
+        changeRGBColor(Color::RED);
     }
 }
 
+/**
+ * @brief Handles the button press with a debounce
+ *
+ */
 void handleButtonPress()
 {
     cout << "Button pressed" << endl;
 
     auto now = high_resolution_clock::now();
-    double elapsed_time_ms = duration_cast<duration<double>>(now - buttonPressTimestamp).count() * 1000;
+    auto elapsedTimeMs = duration_cast<duration<double>>(now - buttonPressTimestamp).count() * 1000;
 
-    cout << "elapsed_time_ms" << elapsed_time_ms << endl;
-
-    if (elapsed_time_ms >= DEBOUNCE)
+    if (elapsedTimeMs >= DEBOUNCE)
     {
-        cout << "Changing mode" << endl;
+        cout << "Button press measured with elapsed time between of " << elapsedTimeMs << "ms" endl;
         changeMode();
     }
 
@@ -114,47 +131,40 @@ void setup()
     // Setup btn
     pinMode(PIN_BTN, INPUT);
     // Setup green LED
-    pinMode(PIN_LED_IN, INPUT);
-    pinMode(PIN_LED_OUT, OUTPUT);
+    pinMode(PIN_LED, OUTPUT);
     // Setup RGB LED
-    pinMode(PIN_R_IN, INPUT);
-    pinMode(PIN_R_OUT, OUTPUT);
-    pinMode(PIN_G_IN, INPUT);
-    pinMode(PIN_G_OUT, OUTPUT);
-    pinMode(PIN_B_IN, INPUT);
-    pinMode(PIN_B_OUT, OUTPUT);
+    pinMode(PIN_R, OUTPUT);
+    pinMode(PIN_G, OUTPUT);
+    pinMode(PIN_B, OUTPUT);
     // Setup interrupt handler for button
     wiringPiISR(PIN_BTN, INT_EDGE_RISING, handleButtonPress);
     // Set initial LED value
-    digitalWrite(PIN_LED_OUT, LED_ON);
+    digitalWrite(PIN_LED, LED_OFF);
     // Set initial RGB LED values
-    digitalWrite(PIN_R_OUT, RGB_OFF);
-    digitalWrite(PIN_G_OUT, RGB_OFF);
-    digitalWrite(PIN_B_OUT, RGB_ON);
+    changeRGBColor(Color::BLUE);
     cout << "Setup complete" << endl;
 }
 
 /**
- * @brief Updates currMode based on the RBG LED color
+ * @brief Syncs currMode with the color of the RGB LED
  *
  */
-void updateMode()
+void syncMode()
 {
-    cout << "Inside updateMode" << endl;
-    // Read which LED color is "ON" (LOW)
-    if (digitalRead(PIN_R_IN) == RGB_ON)
+    // Read which LED color is "ON"
+    if (digitalRead(PIN_R) == RGB_ON)
     {
-        // Red is on
+        // Red is on, set mode to OFF
         currMode = Mode::OFF;
     }
-    else if (digitalRead(PIN_G_IN) == RGB_ON)
+    else if (digitalRead(PIN_G) == RGB_ON)
     {
-        // Green is on
+        // Green is on, set mode to ON
         currMode = Mode::ON;
     }
     else
     {
-        // Blue is on
+        // Blue is on, set mode to AUTO
         currMode = Mode::AUTO;
     }
 }
@@ -165,38 +175,28 @@ void updateMode()
  */
 void loop()
 {
-    cout << "Inside loop" << endl;
-
-    updateMode();
-
-    cout << "currMode = " << currMode << endl;
+    syncMode();
 
     switch (currMode)
     {
     case Mode::OFF:
         // Turn the standard LED off
-        digitalWrite(PIN_LED_OUT, LED_OFF);
+        digitalWrite(PIN_LED, LED_OFF);
         // Turn the RGB LED to RED to signal OFF
-        digitalWrite(PIN_R_OUT, RGB_ON);
-        digitalWrite(PIN_G_OUT, RGB_OFF);
-        digitalWrite(PIN_B_OUT, RGB_OFF);
+        changeRGBColor(Color::RED);
         break;
 
     case Mode::AUTO:
         // TODO: turn standard LED on/off based on sensor data
         // Turn the RGB LED to BLUE to signal AUTO
-        digitalWrite(PIN_R_OUT, RGB_OFF);
-        digitalWrite(PIN_G_OUT, RGB_OFF);
-        digitalWrite(PIN_B_OUT, RGB_ON);
+        changeRGBColor(Color::BLUE);
         break;
 
     case Mode::ON:
         // Turn the standard LED is on
-        digitalWrite(PIN_LED_OUT, LED_ON);
+        digitalWrite(PIN_LED, LED_ON);
         // Turn the RGB LED to GREEN to signal ON
-        digitalWrite(PIN_R_OUT, RGB_OFF);
-        digitalWrite(PIN_G_OUT, RGB_ON);
-        digitalWrite(PIN_B_OUT, RGB_OFF);
+        changeRGBColor(Color::GREEN);
         break;
 
     default:
@@ -208,7 +208,7 @@ void loop()
 int main()
 {
     // Setup wiringPi
-    if (wiringPiSetup() < 0)
+    if (wiringPiSetupGpio() < 0)
     {
         cout << "Failed to setup wiringPi" << endl;
         return 1;
