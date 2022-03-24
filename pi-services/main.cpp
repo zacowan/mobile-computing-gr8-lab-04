@@ -15,6 +15,9 @@ using namespace std;
 
 // Define all of the pin numbers below
 #define PIN_BTN 27
+#define PIN_R_IN 1
+#define PIN_G_IN 2
+#define PIN_B_IN 3
 
 /**
  * END configuration constants
@@ -61,7 +64,6 @@ void setup()
  */
 void updateMode()
 {
-    // TODO
 }
 
 /**
