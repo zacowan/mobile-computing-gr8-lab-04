@@ -46,7 +46,7 @@ using namespace std::chrono;
 
 // The current mode of the device
 volatile Mode currMode = Mode::AUTO;
-volatile auto buttonPressTimestamp = high_resolution_clock::now();
+auto buttonPressTimestamp = high_resolution_clock::now();
 
 /**
  * END state variables
