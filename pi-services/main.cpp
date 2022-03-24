@@ -125,6 +125,12 @@ void setup()
     pinMode(PIN_B_OUT, OUTPUT);
     // Setup interrupt handler for button
     wiringPiISR(PIN_BTN, INT_EDGE_RISING, handleButtonPress);
+    // Set initial LED value
+    digitalWrite(PIN_LED_OUT, LED_ON);
+    // Set initial RGB LED values
+    digitalWrite(PIN_R_OUT, RGB_OFF);
+    digitalWrite(PIN_G_OUT, RGB_OFF);
+    digitalWrite(PIN_B_OUT, RGB_ON);
     cout << "Setup complete" << endl;
 }
 
