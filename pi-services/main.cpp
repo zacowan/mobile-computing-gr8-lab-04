@@ -51,14 +51,23 @@ void changeMode()
     if (currMode == Mode::OFF)
     {
         // Swap to auto
+        digitalWrite(PIN_R_OUT, HIGH);
+        digitalWrite(PIN_G_OUT, HIGH);
+        digitalWrite(PIN_B_OUT, LOW);
     }
     else if (currMode == Mode::AUTO)
     {
         // Swap to on
+        digitalWrite(PIN_R_OUT, HIGH);
+        digitalWrite(PIN_G_OUT, LOW);
+        digitalWrite(PIN_B_OUT, HIGH);
     }
     else
     {
         // Swap to off
+        digitalWrite(PIN_R_OUT, LOW);
+        digitalWrite(PIN_G_OUT, HIGH);
+        digitalWrite(PIN_B_OUT, HIGH);
     }
 }
 
