@@ -1,8 +1,8 @@
 import RPi.GPIO as GPIO  # Import Raspberry Pi GPIO library
 from time import sleep  # Import the sleep function from the time module
 
-pin_num = 2
-pin_num_in = 10
+pin_num = 18
+pin_num_in = 17
 
 GPIO.setwarnings(False)  # Ignore warning for now
 GPIO.setmode(GPIO.BCM)  # Use physical pin numbering
