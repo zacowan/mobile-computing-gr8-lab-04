@@ -17,17 +17,17 @@ using namespace std::chrono;
 #define DEBOUNCE 250
 
 // Define all of the pin numbers below
-#define PIN_BTN 3
+#define PIN_BTN 12
 
-#define PIN_LED_OUT 2
-#define PIN_LED_IN 10
+#define PIN_LED_OUT 18
+#define PIN_LED_IN 17
 
-#define PIN_R_OUT 14
-#define PIN_G_OUT 15
-#define PIN_B_OUT 18
-#define PIN_R_IN 17
-#define PIN_G_IN 27
-#define PIN_B_IN 22
+#define PIN_R_OUT 16
+#define PIN_G_OUT 20
+#define PIN_B_OUT 21
+#define PIN_R_IN 13
+#define PIN_G_IN 19
+#define PIN_B_IN 26
 
 #define LED_ON HIGH
 #define LED_OFF LOW
