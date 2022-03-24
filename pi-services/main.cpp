@@ -1,9 +1,10 @@
 #include <iostream>
 #include <wiringPi.h>
+#include <chrono>
 #include "mode.cpp"
-#include "handle_with_debounce.cpp"
 
 using namespace std;
+using namespace std::chrono;
 
 /**
  * START configuration constants
@@ -85,7 +86,7 @@ void changeMode()
 void handleButtonPress()
 {
     auto now = high_resolution_clock::now();
-    double elapsed_time_ms = chrono::duration<double, std::milli>(now - buttonPressTimestamp).count();
+    double elapsed_time_ms = duration_cast<duration<double>>(now - buttonPressTimestamp).count() * 1000;
 
     if (elapsed_time_ms >= DEBOUNCE)
     {
