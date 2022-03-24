@@ -14,7 +14,7 @@ using namespace std;
 #define LOOP_DELAY 100
 
 // Define all of the pin numbers below
-#define PIN_BTN 27
+#define PIN_BTN 3
 
 #define PIN_LED_OUT 2
 #define PIN_LED_IN 10
