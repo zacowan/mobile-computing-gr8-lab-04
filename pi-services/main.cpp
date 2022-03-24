@@ -93,6 +93,8 @@ void handleButtonPress()
     auto now = high_resolution_clock::now();
     double elapsed_time_ms = duration_cast<duration<double>>(now - buttonPressTimestamp).count() * 1000;
 
+    cout << "elapsed_time_ms" << elapsed_time_ms << endl;
+
     if (elapsed_time_ms >= DEBOUNCE)
     {
         cout << "Changing mode" << endl;
