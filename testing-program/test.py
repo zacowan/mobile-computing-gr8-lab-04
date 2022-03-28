@@ -43,6 +43,22 @@ def construct_tweet(service_name: str, service_inputs: str = "()") -> str:
     return json.dumps(tweet)
 
 
+def led_status_int_to_str(status: int) -> str:
+    if status == 0:
+        return "OFF"
+    else:
+        return "ON"
+
+
+def mode_int_to_str(mode: int) -> str:
+    if mode == 0:
+        return "OFF"
+    elif mode == 1:
+        return "AUTO"
+    else:
+        return "ON"
+
+
 class Tester():
     def __init__(self) -> None:
         self.s = setup_connection()
@@ -52,20 +68,23 @@ class Tester():
         self.s.sendall(str.encode(tweet))
         data, addr = self.s.recvfrom(1024)  # buffer size is 1024 bytes
         print(data)
+        print(f"Current LED status -> {led_status_int_to_str(data)}")
 
     def get_light_level(self):
         tweet = construct_tweet("get_light_level")
         self.s.sendall(str.encode(tweet))
         data, addr = self.s.recvfrom(1024)  # buffer size is 1024 bytes
         print(data)
+        print(f"Current light level -> {data}")
 
     def get_mode(self):
         tweet = construct_tweet("get_mode")
         self.s.sendall(str.encode(tweet))
         data, addr = self.s.recvfrom(1024)  # buffer size is 1024 bytes
         print(data)
+        print(f"Current mode -> {mode_int_to_str(data)}")
 
-    def toggle_mode(self, new_mode: str):
+    def toggle_mode(self, new_mode: int):
         tweet = construct_tweet("toggle_mode", "({})".format(new_mode))
         self.s.sendall(str.encode(tweet))
         print("Attempted to toggle mode to {}".format(new_mode))
