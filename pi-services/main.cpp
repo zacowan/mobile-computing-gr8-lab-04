@@ -24,9 +24,9 @@ using namespace std::chrono;
 
 #define PIN_LED 23
 
-#define PIN_R 16
-#define PIN_G 20
-#define PIN_B 21
+#define PIN_R 5
+#define PIN_G 6
+#define PIN_B 13
 
 #define LED_ON HIGH
 #define LED_OFF LOW
@@ -216,12 +216,12 @@ void loop()
         // TEST THIS
         if(getLightLevel() == LL_HIGH){
             // Turn the standard LED OFF
-            //digitalWrite(PIN_LED, LED_OFF);
-            cout << "Light is off" << endl;
+            digitalWrite(PIN_LED, LED_OFF);
+            //cout << "Light is OFF" << endl;
         }else{
             // Turn the standard LED ON
-            //digitalWrite(PIN_LED, LED_ON);
-            cout << "Light is pn" << endl;
+            digitalWrite(PIN_LED, LED_ON);
+            //cout << "Light is ON" << endl;
         }
         // Turn the RGB LED to BLUE to signal AUTO
         changeRGBColor(Color::BLUE);
