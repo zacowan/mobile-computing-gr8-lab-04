@@ -1,8 +1,14 @@
-#pragma once
-
 #include <string>
+#include <wiringPi.h>
 
 using namespace std;
+
+#define PIN_R 16
+#define PIN_G 20
+#define PIN_B 21
+
+#define RGB_ON LOW
+#define RGB_OFF HIGH
 
 /**
  * @brief Changes the color of the RBG LED to update the mode of the device.
@@ -16,15 +22,24 @@ void toggleMode(string newMode)
     switch (newMode)
     {
     case "OFF":
-        // TODO: turn the RGB LED to OFF_COLOR
+        // turn the RGB LED to OFF_COLOR
+        digitalWrite(PIN_R, RGB_ON);
+        digitalWrite(PIN_G, RGB_OFF);
+        digitalWrite(PIN_B, RGB_OFF);
         break;
 
     case "AUTO":
-        // TODO: turn the RGB LED to AUTO_COLOR
+        // turn the RGB LED to AUTO_COLOR
+        digitalWrite(PIN_R, RGB_OFF);
+        digitalWrite(PIN_G, RGB_OFF);
+        digitalWrite(PIN_B, RGB_ON);
         break;
 
     case "ON":
-        // TODO: turn the RGB LED to ON_COLOR
+        // turn the RGB LED to ON_COLOR
+        digitalWrite(PIN_R, RGB_OFF);
+        digitalWrite(PIN_G, RGB_ON);
+        digitalWrite(PIN_B, RGB_OFF);
         break;
 
     default:

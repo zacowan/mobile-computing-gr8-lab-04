@@ -22,7 +22,7 @@ Summary:
         photoresistor (LIGHT/DARK)
         get_mode -> returns the mode based on the RGB LED (OFF/AUTO/ON)
         get_led -> returns the status of the LED (ON/OFF)
-        toggle_mode -> switches the mode (OFF -> AUTO -> ON)
+        toggle_mode(newMode) -> switches the mode based on newMode (OFF/AUTO/ON)
 
 """
 
