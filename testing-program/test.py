@@ -49,31 +49,25 @@ class Tester():
 
     def get_led(self):
         tweet = construct_tweet("get_led")
-        self.s.sendall(tweet)
-        # Not sure if below works
-        received = ""
-        self.s.recv_into(received)
-        print(received)
+        self.s.sendall(str.encode(tweet))
+        data, addr = self.s.recvfrom(1024)  # buffer size is 1024 bytes
+        print(data)
 
     def get_light_level(self):
         tweet = construct_tweet("get_light_level")
-        self.s.sendall(tweet)
-        # Not sure if below works
-        received = ""
-        self.s.recv_into(received)
-        print(received)
+        self.s.sendall(str.encode(tweet))
+        data, addr = self.s.recvfrom(1024)  # buffer size is 1024 bytes
+        print(data)
 
     def get_mode(self):
         tweet = construct_tweet("get_mode")
-        self.s.sendall(tweet)
-        # Not sure if below works
-        received = ""
-        self.s.recv_into(received)
-        print(received)
+        self.s.sendall(str.encode(tweet))
+        data, addr = self.s.recvfrom(1024)  # buffer size is 1024 bytes
+        print(data)
 
     def toggle_mode(self, new_mode: str):
         tweet = construct_tweet("toggle_mode", "({})".format(new_mode))
-        self.s.sendall(tweet)
+        self.s.sendall(str.encode(tweet))
         print("Attempted to toggle mode to {}".format(new_mode))
 
 
