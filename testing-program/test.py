@@ -96,6 +96,7 @@ def main():
 
     # Set the current mode to AUTO
     t.toggle_mode(1)
+    sleep(0.5)
     # Get the current mode
     t.get_mode()
     # Check the current light level
@@ -105,11 +106,13 @@ def main():
     sleep(5)
     # Change the mode to "ON"
     t.toggle_mode(2)
+    sleep(0.5)
     # Check the status of the LED
     t.get_led()
     sleep(5)
     # Change the mode to "OFF"
     t.toggle_mode(0)
+    sleep(0.5)
     # Check the status of the LED
     t.get_led()
     sleep(5)
