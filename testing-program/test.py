@@ -2,14 +2,14 @@ from socket import socket, AF_INET, SOCK_STREAM
 import json
 
 # ########## CONSTANTS ##########
-HOST_IP = "192.168.1.1"
+HOST_IP = "192.168.0.111"
 PORT = 6668
-THING_ID = "A"
-SPACE_ID = "B"
+THING_ID = "StrawberryThing01"
+SPACE_ID = "StrawberrySmartSpace"
 # ###############################
 
 
-def setup_connection() -> socket:
+def setup_connection():
     s1 = socket(AF_INET, SOCK_STREAM)
     s1.connect((HOST_IP, PORT))
 
@@ -33,7 +33,7 @@ class Tester():
         self.s = setup_connection()
 
     def get_led(self):
-        tweet = construct_tweet("Get LED")
+        tweet = construct_tweet("get_led")
         self.s.sendall(tweet)
         # Not sure if below works
         received = ""
@@ -41,7 +41,7 @@ class Tester():
         print(received)
 
     def get_light_level(self):
-        tweet = construct_tweet("Get Light Level")
+        tweet = construct_tweet("get_light_level")
         self.s.sendall(tweet)
         # Not sure if below works
         received = ""
@@ -49,7 +49,7 @@ class Tester():
         print(received)
 
     def get_mode(self):
-        tweet = construct_tweet("Get Mode")
+        tweet = construct_tweet("get_mode")
         self.s.sendall(tweet)
         # Not sure if below works
         received = ""
@@ -57,7 +57,7 @@ class Tester():
         print(received)
 
     def toggle_mode(self, new_mode: str):
-        tweet = construct_tweet("Toggle Mode", "({})".format(new_mode))
+        tweet = construct_tweet("toggle_mode", "({})".format(new_mode))
         self.s.sendall(tweet)
         print("Attempted to toggle mode to {}".format(new_mode))
 

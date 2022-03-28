@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#define PIN_LED 23
+const int PIN_LED = 23;
 
 /**
  * @brief Get the status of the standard LED
