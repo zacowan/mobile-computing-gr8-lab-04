@@ -1,5 +1,6 @@
 #include <iostream>
 #include <wiringPi.h>
+#include <ADCDevice.hpp>
 #include <chrono>
 #include <signal.h>
 #include "mode.cpp"
@@ -23,14 +24,17 @@ using namespace std::chrono;
 
 #define PIN_LED 23
 
-#define PIN_R 16
-#define PIN_G 20
-#define PIN_B 21
+#define PIN_R 5
+#define PIN_G 6
+#define PIN_B 13
 
 #define LED_ON HIGH
 #define LED_OFF LOW
 #define RGB_ON LOW
 #define RGB_OFF HIGH
+
+#define LL_HIGH "HIGH"
+#define LL_LOW "LOW"
 
 /**
  * END configuration constants
@@ -45,6 +49,7 @@ using namespace std::chrono;
 // The current mode of the device
 auto currMode = Mode::ON;
 auto buttonPressTimestamp = high_resolution_clock::now();
+ADCDevice *adc;
 
 /**
  * END state variables
@@ -123,6 +128,16 @@ void handleButtonPress()
 }
 
 /**
+ * @brief Gets the Light Level from the sensor using the ADC
+ *
+ */
+string getLightLevel()
+{
+    int level = adc->analogRead(0);
+    return (level < 50) ? LL_HIGH : LL_LOW;
+}
+
+/**
  * @brief Sets up raspberry pi board, pins, and interrupt handlers
  *
  */
@@ -143,6 +158,15 @@ void setup()
     digitalWrite(PIN_LED, LED_OFF);
     // Set initial RGB LED values
     changeRGBColor(Color::BLUE);
+
+    // Initialize Light Sensor Components
+    adc = new ADCDevice();
+    if(adc->detectI2C(0x4b)){
+        delete adc;
+        adc = new ADS7830();
+    }else{
+        cout << "No I2C" << endl;
+    }
     cout << "Setup complete" << endl;
 }
 
@@ -189,12 +213,22 @@ void loop()
 
     case Mode::AUTO:
         // TODO: turn standard LED on/off based on sensor data
+        // TEST THIS
+        if(getLightLevel() == LL_HIGH){
+            // Turn the standard LED OFF
+            digitalWrite(PIN_LED, LED_OFF);
+            //cout << "Light is OFF" << endl;
+        }else{
+            // Turn the standard LED ON
+            digitalWrite(PIN_LED, LED_ON);
+            //cout << "Light is ON" << endl;
+        }
         // Turn the RGB LED to BLUE to signal AUTO
         changeRGBColor(Color::BLUE);
         break;
 
     case Mode::ON:
-        // Turn the standard LED is on
+        // Turn the standard LED to ON
         digitalWrite(PIN_LED, LED_ON);
         // Turn the RGB LED to GREEN to signal ON
         changeRGBColor(Color::GREEN);
