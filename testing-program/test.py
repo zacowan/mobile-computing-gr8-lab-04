@@ -2,14 +2,15 @@
 This file tests the services associated with our IoT thing.
 
 Summary:
-    1. The current mode is checked (should be AUTO).
-    2. The light level from the photoresistor is checked.
-    3. The status of the LED (ON/OFF) is checked (should be ON if light level is
+    1. The mode is set to AUTO.
+    2. The current mode is checked (should be AUTO).
+    3. The light level from the photoresistor is checked.
+    4. The status of the LED (ON/OFF) is checked (should be ON if light level is
     > 50).
-    4. The mode is set to ON.
-    5. The status of the LED is checked (should be ON).
-    6. The mode is set to OFF.
-    7. The status of the LED is checked (should be OFF).
+    5. The mode is set to ON.
+    6. The status of the LED is checked (should be ON).
+    7. The mode is set to OFF.
+    8. The status of the LED is checked (should be OFF).
 
 """
 from socket import socket, AF_INET, SOCK_STREAM
@@ -93,6 +94,8 @@ class Tester():
 def main():
     t = Tester()
 
+    # Set the current mode to AUTO
+    t.toggle_mode(1)
     # Get the current mode
     t.get_mode()
     # Check the current light level

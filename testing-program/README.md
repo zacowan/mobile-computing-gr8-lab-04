@@ -8,5 +8,4 @@ Shaun Fidler, Sydney McLaughlin, Zach Cowan
 
 In order to get Atlas to work with our program, we had to modify the way that
 Atlas builds the C++ services by including an additional WiringPi library.
-
-### Instructions to Include [Insert Library Here]
+Specifically, we included wiringPiI2C.h.
