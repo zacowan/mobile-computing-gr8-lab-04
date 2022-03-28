@@ -3,9 +3,9 @@
 
 using namespace std;
 
-int PIN_R = 16;
-int PIN_G = 20;
-int PIN_B = 21;
+int PIN_R = 5;
+int PIN_G = 6;
+int PIN_B = 13;
 
 int RGB_ON = LOW;
 int RGB_OFF = HIGH;
