@@ -55,6 +55,9 @@ def main():
         setup()
         while True:
             sleep(LOOP_DELAY)
+    except KeyboardInterrupt:
+        print()
+        print("Program execution stopped via keyboard")
     except Exception as e:
         print("Exception: {}".format(e))
     finally:
