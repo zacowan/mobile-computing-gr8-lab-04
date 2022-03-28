@@ -26,11 +26,11 @@ string getMode()
     else if (digitalRead(PIN_G) == RGB_ON)
     {
         // Green is on, mode is "ON"
-        return 1;
+        return 2
     }
     else
     {
         // Blue is on, mode is "AUTO"
-        return 2;
+        return 1;
     }
 }
