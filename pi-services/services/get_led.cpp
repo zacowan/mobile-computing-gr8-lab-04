@@ -1,25 +1,20 @@
-#include <string>
-#include <wiringPi.h>
-
-using namespace std;
-
-const int PIN_LED = 23;
+#include "get_led.h"
 
 /**
  * @brief Get the status of the standard LED
  *
- * @return string, one of "ON" | "OFF"
+ * @return int, 1 for "ON" | 0 for "OFF"
  */
-string get_led()
+int getLED()
 {
-    auto status = digitalRead(PIN_LED);
+    auto status = digitalRead(constants::PIN_LED);
 
     if (status == HIGH)
     {
-        return "ON";
+        return 1;
     }
     else
     {
-        return "OFF";
+        return 0;
     }
 }
