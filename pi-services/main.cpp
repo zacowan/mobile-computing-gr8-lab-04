@@ -61,18 +61,24 @@ ADCDevice *adc;
  *
  * @param Color The color to set
  */
-void changeRGBColor(Color color) {
-    if (color == Color::RED) {
+void changeRGBColor(Color color)
+{
+    if (color == Color::RED)
+    {
         // Change to red
         digitalWrite(PIN_R, RGB_ON);
         digitalWrite(PIN_G, RGB_OFF);
         digitalWrite(PIN_B, RGB_OFF);
-    } else if (color == Color::GREEN) {
+    }
+    else if (color == Color::GREEN)
+    {
         // Change to green
         digitalWrite(PIN_R, RGB_OFF);
         digitalWrite(PIN_G, RGB_ON);
         digitalWrite(PIN_B, RGB_OFF);
-    } else {
+    }
+    else
+    {
         // Change to blue
         digitalWrite(PIN_R, RGB_OFF);
         digitalWrite(PIN_G, RGB_OFF);
@@ -161,10 +167,13 @@ void setup()
 
     // Initialize Light Sensor Components
     adc = new ADCDevice();
-    if(adc->detectI2C(0x4b)){
+    if (adc->detectI2C(0x4b))
+    {
         delete adc;
         adc = new ADS7830();
-    }else{
+    }
+    else
+    {
         cout << "No I2C" << endl;
     }
     cout << "Setup complete" << endl;
@@ -214,14 +223,17 @@ void loop()
     case Mode::AUTO:
         // TODO: turn standard LED on/off based on sensor data
         // TEST THIS
-        if(getLightLevel() == LL_HIGH){
+        if (getLightLevel() == LL_HIGH)
+        {
             // Turn the standard LED OFF
             digitalWrite(PIN_LED, LED_OFF);
-            //cout << "Light is OFF" << endl;
-        }else{
+            // cout << "Light is OFF" << endl;
+        }
+        else
+        {
             // Turn the standard LED ON
             digitalWrite(PIN_LED, LED_ON);
-            //cout << "Light is ON" << endl;
+            // cout << "Light is ON" << endl;
         }
         // Turn the RGB LED to BLUE to signal AUTO
         changeRGBColor(Color::BLUE);
@@ -244,14 +256,16 @@ void loop()
  * @brief Handles resetting the state of the LEDs before exiting
  *
  */
-void cleanup() {
+void cleanup()
+{
     digitalWrite(PIN_R, RGB_OFF);
     digitalWrite(PIN_G, RGB_OFF);
     digitalWrite(PIN_B, RGB_OFF);
     digitalWrite(PIN_LED, OFF);
 }
 
-void handleSigInt(int s) {
+void handleSigInt(int s)
+{
     cout << "Caught signal " << s << endl;
     cleanup();
     exit(0);
@@ -261,7 +275,8 @@ void handleSigInt(int s) {
  * @brief Sets up interrupt handler for ctrl+c
  *
  */
-void setupSigIntHandler() {
+void setupSigIntHandler()
+{
     struct sigaction sigIntHandler;
     sigIntHandler.sa_handler = handleSigInt;
     sigemptyset(&sigIntHandler.sa_mask);

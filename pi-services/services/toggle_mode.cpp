@@ -3,39 +3,39 @@
 
 using namespace std;
 
-#define PIN_R 16
-#define PIN_G 20
-#define PIN_B 21
+int PIN_R = 5;
+int PIN_G = 6;
+int PIN_B = 13;
 
-#define RGB_ON LOW
-#define RGB_OFF HIGH
+int RGB_ON = LOW;
+int RGB_OFF = HIGH;
 
 /**
  * @brief Changes the color of the RBG LED to update the mode of the device.
  *
- * @param newMode the mode to set the device to.
- * A string that is one of "OFF" | "AUTO" | "ON".
+ * @param new_mode the mode to set the device to.
+ * An integer that is one of 0 | 1 | 2.
  *
  */
-void toggleMode(string newMode)
+void toggleMode(int new_mode)
 {
-    switch (newMode)
+    switch (new_mode)
     {
-    case "OFF":
+    case 0:
         // turn the RGB LED to OFF_COLOR
         digitalWrite(PIN_R, RGB_ON);
         digitalWrite(PIN_G, RGB_OFF);
         digitalWrite(PIN_B, RGB_OFF);
         break;
 
-    case "AUTO":
+    case 1:
         // turn the RGB LED to AUTO_COLOR
         digitalWrite(PIN_R, RGB_OFF);
         digitalWrite(PIN_G, RGB_OFF);
         digitalWrite(PIN_B, RGB_ON);
         break;
 
-    case "ON":
+    case 2:
         // turn the RGB LED to ON_COLOR
         digitalWrite(PIN_R, RGB_OFF);
         digitalWrite(PIN_G, RGB_ON);

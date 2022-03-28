@@ -9,7 +9,7 @@ SPACE_ID = "StrawberrySmartSpace"
 # ###############################
 
 
-def setup_connection() -> socket:
+def setup_connection():
     s1 = socket(AF_INET, SOCK_STREAM)
     s1.connect((HOST_IP, PORT))
 
