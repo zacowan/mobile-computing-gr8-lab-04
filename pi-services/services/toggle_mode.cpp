@@ -13,13 +13,13 @@ int RGB_OFF = HIGH;
 /**
  * @brief Changes the color of the RBG LED to update the mode of the device.
  *
- * @param newMode the mode to set the device to.
+ * @param new_mode the mode to set the device to.
  * An integer that is one of 0 | 1 | 2.
  *
  */
-void toggleMode(string newMode)
+void toggleMode(int new_mode)
 {
-    switch (newMode)
+    switch (new_mode)
     {
     case 0:
         // turn the RGB LED to OFF_COLOR
