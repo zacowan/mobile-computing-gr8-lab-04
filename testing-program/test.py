@@ -60,6 +60,10 @@ def mode_int_to_str(mode: int) -> str:
         return "ON"
 
 
+def data_to_dict(data):
+    return dict(data.decode('utf-8'))
+
+
 class Tester():
     def __init__(self) -> None:
         self.s = setup_connection()
@@ -68,27 +72,35 @@ class Tester():
         tweet = construct_tweet("get_led")
         self.s.sendall(str.encode(tweet))
         data, addr = self.s.recvfrom(1024)  # buffer size is 1024 bytes
-        print(data)
-        print(f"Current LED status -> {led_status_int_to_str(data)}")
+        decoded_data = data_to_dict(data)
+        res = decoded_data["Service Result"]
+        print(f"Current LED status -> {led_status_int_to_str(res)}")
 
     def get_light_level(self):
         tweet = construct_tweet("get_light_level")
         self.s.sendall(str.encode(tweet))
         data, addr = self.s.recvfrom(1024)  # buffer size is 1024 bytes
-        print(data)
-        print(f"Current light level -> {data}")
+        decoded_data = data_to_dict(data)
+        res = decoded_data["Service Result"]
+        print(f"Current light level -> {res}")
 
     def get_mode(self):
         tweet = construct_tweet("get_mode")
         self.s.sendall(str.encode(tweet))
         data, addr = self.s.recvfrom(1024)  # buffer size is 1024 bytes
         print(data)
-        print(f"Current mode -> {mode_int_to_str(data)}")
+        decoded_data = data_to_dict(data)
+        print(decoded_data)
+        res = decoded_data["Service Result"]
+        print(decoded_data)
+        print(f"Current mode -> {mode_int_to_str(res)}")
 
     def toggle_mode(self, new_mode: int):
         tweet = construct_tweet("toggle_mode", "({})".format(new_mode))
         self.s.sendall(str.encode(tweet))
         print("Attempted to toggle mode to {}".format(new_mode))
+        data, addr = self.s.recvfrom(1024)
+        print("TOGGLE" + data.decode('utf-8'))
 
 
 def main():
@@ -96,11 +108,13 @@ def main():
 
     # Set the current mode to AUTO
     t.toggle_mode(1)
-    sleep(0.5)
+    sleep(60)
     # Get the current mode
     t.get_mode()
+    sleep(0.5)
     # Check the current light level
     t.get_light_level()
+    sleep(0.5)
     # Check the status of the LED
     t.get_led()
     sleep(5)
