@@ -1,5 +1,20 @@
+"""
+This file tests the services associated with our IoT thing.
+
+Summary:
+    1. The current mode is checked (should be AUTO).
+    2. The light level from the photoresistor is checked.
+    3. The status of the LED (ON/OFF) is checked (should be ON if light level is
+    > 50).
+    4. The mode is set to ON.
+    5. The status of the LED is checked (should be ON).
+    6. The mode is set to OFF.
+    7. The status of the LED is checked (should be OFF).
+
+"""
 from socket import socket, AF_INET, SOCK_STREAM
 import json
+from time import sleep
 
 # ########## CONSTANTS ##########
 HOST_IP = "192.168.0.111"
@@ -65,7 +80,23 @@ class Tester():
 def main():
     t = Tester()
 
+    # Get the current mode
+    t.get_mode()
+    # Check the current light level
+    t.get_light_level()
+    # Check the status of the LED
     t.get_led()
+    sleep(5)
+    # Change the mode to "ON"
+    t.toggle_mode(2)
+    # Check the status of the LED
+    t.get_led()
+    sleep(5)
+    # Change the mode to "OFF"
+    t.toggle_mode(0)
+    # Check the status of the LED
+    t.get_led()
+    sleep(5)
 
 
 if __name__ == "__main__":
