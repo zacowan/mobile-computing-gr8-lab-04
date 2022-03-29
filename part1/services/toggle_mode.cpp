@@ -7,7 +7,8 @@
  * Service description: mimics the functionality of our button, with a higher
  * degree of control. The button cycles between the 3 modes (OFF/AUTO/ON). This
  * service allows a mode to be specified as an int (0 = OFF, 1 = AUTO, 2 = ON)
- * and will set our device into that mode.
+ * and will set our device into that mode. Specifically, the color of the RGB
+ * LED is changed to RED for OFF, BLUE for AUTO, and GREEN for ON.
  *
  * @param new_mode the mode to set the device to.
  * An integer that is one of 0 | 1 | 2.
