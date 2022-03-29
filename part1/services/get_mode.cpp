@@ -3,7 +3,7 @@
 /**
  * @brief Get the current mode of the device based on the RGB LED color.
  *
- * Entity: RGB LED
+ * Entity: RGB_LED_1
  * Service description: reads the color of the LED and returns an abstraction
  * that indicates what mode our program is currently in. If the LED is RED, the
  * mode is "OFF" (represented by 0). If the LED is BLUE, the mode is "AUTO" (
