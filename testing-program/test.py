@@ -22,6 +22,8 @@ HOST_IP = "192.168.0.111"
 PORT = 6668
 THING_ID = "StrawberryThing01"
 SPACE_ID = "StrawberrySmartSpace"
+SHORT_SLEEP = 0.1
+LONG_SLEEP = 5
 # ###############################
 
 
@@ -72,6 +74,10 @@ class Tester():
         data, addr = s.recvfrom(1024)  # buffer size is 1024 bytes
         decoded_data = data_to_dict(data)
         res = decoded_data["Service Result"]
+        if decoded_data["Service Name"] == "get_led":
+            print("get_led successful")
+        else:
+            print("get_led unsuccessful")
         print(f"Current LED status -> {led_status_int_to_str(res)}")
         s.close()
 
@@ -82,6 +88,10 @@ class Tester():
         data, addr = s.recvfrom(1024)  # buffer size is 1024 bytes
         decoded_data = data_to_dict(data)
         res = decoded_data["Service Result"]
+        if decoded_data["Service Name"] == "get_light_level":
+            print("get_light_level successful")
+        else:
+            print("get_light_level unsuccessful")
         print(f"Current light level -> {res}")
         s.close()
 
@@ -90,11 +100,12 @@ class Tester():
         tweet = construct_tweet("get_mode")
         s.sendall(str.encode(tweet))
         data, addr = s.recvfrom(1024)  # buffer size is 1024 bytes
-        print(data)
         decoded_data = data_to_dict(data)
-        print(decoded_data)
         res = decoded_data["Service Result"]
-        print(decoded_data)
+        if decoded_data["Service Name"] == "get_mode":
+            print("get_mode successful")
+        else:
+            print("get_mode unsuccessful")
         print(f"Current mode -> {mode_int_to_str(res)}")
         s.close()
 
@@ -104,7 +115,11 @@ class Tester():
         s.sendall(str.encode(tweet))
         print("Attempted to toggle mode to {}".format(new_mode))
         data, addr = s.recvfrom(1024)
-        print("TOGGLE" + data.decode('utf-8'))
+        decoded_data = data_to_dict(data)
+        if decoded_data["Service Name"] == "toggle_mode":
+            print("toggle_mode successful")
+        else:
+            print("toggle_mode unsuccessful")
         s.close()
 
 
@@ -113,28 +128,28 @@ def main():
 
     # Set the current mode to AUTO
     t.toggle_mode(1)
-    sleep(0.5)
+    sleep(SHORT_SLEEP)
     # Get the current mode
     t.get_mode()
-    sleep(0.5)
+    sleep(SHORT_SLEEP)
     # Check the current light level
     t.get_light_level()
-    sleep(0.5)
+    sleep(SHORT_SLEEP)
     # Check the status of the LED
     t.get_led()
-    sleep(5)
+    sleep(LONG_SLEEP)
     # Change the mode to "ON"
     t.toggle_mode(2)
-    sleep(0.5)
+    sleep(SHORT_SLEEP)
     # Check the status of the LED
     t.get_led()
-    sleep(5)
+    sleep(LONG_SLEEP)
     # Change the mode to "OFF"
     t.toggle_mode(0)
-    sleep(0.5)
+    sleep(SHORT_SLEEP)
     # Check the status of the LED
     t.get_led()
-    sleep(5)
+    sleep(LONG_SLEEP)
 
 
 if __name__ == "__main__":
