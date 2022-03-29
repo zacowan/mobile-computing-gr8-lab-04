@@ -20,7 +20,8 @@ services to be offered by each sensor/actuator.
 
 In addition to above, helped design skeleton main program that the pi runs and
 wrote the Python test IoT application for validating that the Atlas services
-were set up correctly.
+were set up correctly. Assisted with writing services. Assisted with debugging
+hardware and services.
 
 ### Shaun (33% Relative Contribution)
 
