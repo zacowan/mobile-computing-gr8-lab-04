@@ -1,5 +1,0 @@
-enum LightLevel 
-{
-    LOW,
-    HIGH
-};
