@@ -1,0 +1,392 @@
+<Atlas_IoTDDL>
+	<Atlas_Thing>
+		<Descriptive_Metadata>
+			<Thing_ATID>StrawberryThing01</Thing_ATID>
+			<Thing_Name>Night_Light</Thing_Name>
+			<Thing_Owner>StrawberryPi</Thing_Owner>
+			<Thing_Vendor>StrawberryPi</Thing_Vendor>
+			<Thing_Model>Gen_1</Thing_Model>
+			<Thing_ReleaseDate>3/2022</Thing_ReleaseDate>
+			<Thing_Type>Thing_of_Things</Thing_Type>
+			<Thing_OperatingSystem>Raspbian</Thing_OperatingSystem>
+			<Thing_ShortDescription>Light Sensor Controlled Light</Thing_ShortDescription>
+			<LongDescription>Summary:
+    This raspberry pi should control the ON/OFF state of an LED based on 3
+    different modes.
+    OFF: the LED should constantly be OFF. Indicated by a RED color on the RGB
+    LED.
+    AUTO: the LED should be OFF if the photoresistor detects that it is LIGHT,
+    or ON if the photoresistor detects that it is DARK.
+    Indicated by a BLUE color on the RGB LED.
+    ON: the LED should constantly be ON. Indicated by a GREEN color on the RGB
+    LED.
+    The services that will be provided by this pi are:
+        get_light_level -> returns the current light level from the
+        photoresistor (LIGHT/DARK)
+        get_mode -> returns the mode based on the RGB LED (OFF/AUTO/ON)
+        get_led -> returns the status of the LED (ON/OFF)
+        toggle_mode(newMode) -> switches the mode based on newMode (OFF/AUTO/ON)</LongDescription>
+			<Thing_SSID>StrawberrySmartSpace</Thing_SSID>
+			<Space_Coordinates></Space_Coordinates>
+			<Space_Name></Space_Name>
+			<Space_Description></Space_Description>
+			<Space_Constraints>
+				<Temperature>
+					<Lower_Bound></Lower_Bound>
+					<Upper_Bound></Upper_Bound>
+				</Temperature>
+				<Humidity>
+					<Lower_Bound></Lower_Bound>
+					<Upper_Bound></Upper_Bound>
+				</Humidity>
+				<Voltage>
+					<Lower_Bound></Lower_Bound>
+					<Upper_Bound></Upper_Bound>
+				</Voltage>
+				<Radio_Interference_Radius></Radio_Interference_Radius>
+				<Safe_Temperature_Radius></Safe_Temperature_Radius>
+			</Space_Constraints>
+		</Descriptive_Metadata>
+		<Administrative_Metadata>
+			<Network_Manager>
+				<Module></Module>
+				<Type></Type>
+				<Network_Name>MySpaceNetwork</Network_Name>
+				<Network_Passcode>MySpaceNetwork</Network_Passcode>
+				<MulticastGroup>
+					<IP>232.1.1.1</IP>
+					<Port>1235</Port>
+				</MulticastGroup>
+				<Communication_Protocol></Communication_Protocol>
+				<InterOperableCommunication>
+					<Broker>
+						<Vendor>HiveMQ</Vendor>
+						<Dashboard>http://www.mqtt-dashboard.com/</Dashboard>
+						<IP>broker.hivemq.com</IP>
+						<Port>1883</Port>
+					</Broker>
+					<Topic>
+						<Root>/Atlas</Root>
+						<Network_MQTTClient>/Network/MQTT_Client</Network_MQTTClient>
+						<Network_PrivateBroker>/Network/Private_Broker</Network_PrivateBroker>
+						<Multicast_ThingIdentity>/Multicast/Tweet_ThingIdentity</Multicast_ThingIdentity>
+						<Multicast_EntityIdentity>/Multicast/Tweet_EntityIdentity</Multicast_EntityIdentity>
+						<Multicast_API>/Multicast/API</Multicast_API>
+						<Unicast>/Unicast/Interaction</Unicast>
+					</Topic>
+				</InterOperableCommunication>
+				<OMA_DM>
+					<AccessName>Eclipse Leshan</AccessName>
+					<IP>coap://leshan.eclipseprojects.io</IP>
+					<Port>5683</Port>
+				</OMA_DM>
+			</Network_Manager>
+			<Memory_Manager>
+				<Store_Format></Store_Format>
+				<MemoryUnit_Application></MemoryUnit_Application>
+				<MemoryUnit_Knowledge></MemoryUnit_Knowledge>
+			</Memory_Manager>
+		</Administrative_Metadata>
+		<Thing_Attachment>
+
+		</Thing_Attachment>
+		<Structural_Metadata>
+			<Number_Hardware>0</Number_Hardware>
+			<Number_Software>0</Number_Software>
+			<Number_Hybrid>0</Number_Hybrid>
+			<Number_Entities>4</Number_Entities>
+		</Structural_Metadata>
+	</Atlas_Thing>
+	<Atlas_Entities>
+		<Entity_1>
+			<Descriptive_Metadata>
+				<ID>LED_1</ID>
+				<Name></Name>
+				<Owner></Owner>
+				<Vendor></Vendor>
+				<Category></Category>
+				<Type></Type>
+				<Description></Description>
+			</Descriptive_Metadata>
+			<Services>
+				<Service_1>
+					<Name>get_led</Name>
+					<AppCategory>Lighting</AppCategory>
+					<Type>Report</Type>
+					<Keywords></Keywords>
+					<Description>Returns whether the LED is ON or OFF</Description>
+					<Contextual_Constraints>
+						<Time_Window>0seconds</Time_Window>
+						<Usage_Mode></Usage_Mode>
+						<Concurrent></Concurrent>
+					</Contextual_Constraints>
+					<Temporal_Constraints>
+						<Working>
+							<StartTime>12am</StartTime>
+							<EndTime>12am</EndTime>
+						</Working>
+						<Callable>
+							<StartTime>12am</StartTime>
+							<EndTime>12am</EndTime>
+						</Callable>
+					</Temporal_Constraints>
+					<OutputDescription>LED_status</OutputDescription>
+					<OutputType>int</OutputType>
+					<Service_Formula><![CDATA[
+// ~ Service body C/C++ code block ~
+// You can use the inputs you defined above by name
+// Any return values should match the specified output type
+
+wiringPiSetupGpio();
+int status = digitalRead(23);
+
+if (status == HIGH)
+{
+    LED_status = 1;
+}
+else
+{
+    LED_status = 0;
+}
+]]></Service_Formula>
+					<Service_NumberInputs>0</Service_NumberInputs>
+					<Service_InputTypes></Service_InputTypes>
+					<Service_InputDescriptions></Service_InputDescriptions>
+				</Service_1>
+				<Number_Services>1</Number_Services>
+			</Services>
+			<UnboundedService>
+				<Number_UnboundedServices>0</Number_UnboundedServices>
+			</UnboundedService>
+			<Relationships>
+				<Number_Relationships>0</Number_Relationships>
+			</Relationships>
+		</Entity_1>
+		<Entity_2>
+			<Descriptive_Metadata>
+				<ID>LightSensor_1</ID>
+				<Name></Name>
+				<Owner></Owner>
+				<Vendor></Vendor>
+				<Category></Category>
+				<Type></Type>
+				<Description></Description>
+			</Descriptive_Metadata>
+			<Services>
+				<Service_1>
+					<Name>get_light_level</Name>
+					<AppCategory>Ambiance</AppCategory>
+					<Type>Report</Type>
+					<Keywords></Keywords>
+					<Description>Returns the current light level</Description>
+					<Contextual_Constraints>
+						<Time_Window>0seconds</Time_Window>
+						<Usage_Mode></Usage_Mode>
+						<Concurrent></Concurrent>
+					</Contextual_Constraints>
+					<Temporal_Constraints>
+						<Working>
+							<StartTime>12am</StartTime>
+							<EndTime>12am</EndTime>
+						</Working>
+						<Callable>
+							<StartTime>12am</StartTime>
+							<EndTime>12am</EndTime>
+						</Callable>
+					</Temporal_Constraints>
+					<OutputDescription>light_level</OutputDescription>
+					<OutputType>int</OutputType>
+					<Service_Formula><![CDATA[
+// ~ Service body C/C++ code block ~
+// You can use the inputs you defined above by name
+// Any return values should match the specified output type
+
+int cmd = 0x84;
+wiringPiSetup();
+int _fd = wiringPiI2CSetup(0x4b); 
+int chn = 0;
+wiringPiI2CWrite(_fd, cmd|(((chn<<2 | chn>>1)&0x07)<<4));
+light_level = wiringPiI2CRead(_fd);
+]]></Service_Formula>
+					<Service_NumberInputs>0</Service_NumberInputs>
+					<Service_InputTypes></Service_InputTypes>
+					<Service_InputDescriptions></Service_InputDescriptions>
+				</Service_1>
+				<Number_Services>1</Number_Services>
+			</Services>
+			<UnboundedService>
+				<Number_UnboundedServices>0</Number_UnboundedServices>
+			</UnboundedService>
+			<Relationships>
+				<Number_Relationships>0</Number_Relationships>
+			</Relationships>
+		</Entity_2>
+		<Entity_3>
+			<Descriptive_Metadata>
+				<ID>RGB_LED_1</ID>
+				<Name></Name>
+				<Owner></Owner>
+				<Vendor></Vendor>
+				<Category></Category>
+				<Type></Type>
+				<Description></Description>
+			</Descriptive_Metadata>
+			<Services>
+				<Service_1>
+					<Name>get_mode</Name>
+					<AppCategory>Lighting</AppCategory>
+					<Type>Report</Type>
+					<Keywords></Keywords>
+					<Description>Returns the current mode</Description>
+					<Contextual_Constraints>
+						<Time_Window>0seconds</Time_Window>
+						<Usage_Mode></Usage_Mode>
+						<Concurrent></Concurrent>
+					</Contextual_Constraints>
+					<Temporal_Constraints>
+						<Working>
+							<StartTime>12am</StartTime>
+							<EndTime>12am</EndTime>
+						</Working>
+						<Callable>
+							<StartTime>12am</StartTime>
+							<EndTime>12am</EndTime>
+						</Callable>
+					</Temporal_Constraints>
+					<OutputDescription>mode</OutputDescription>
+					<OutputType>int</OutputType>
+					<Service_Formula><![CDATA[
+// ~ Service body C/C++ code block ~
+// You can use the inputs you defined above by name
+// Any return values should match the specified output type
+
+int PIN_R = 5;
+int PIN_G = 6;
+int PIN_B = 13;
+
+int RGB_ON = LOW;
+int RGB_OFF = HIGH;
+
+wiringPiSetupGpio();
+
+// Read which LED color is "ON"
+if (digitalRead(PIN_R) == RGB_ON)
+{
+    // Red is on, mode is "OFF"
+    mode = 0;
+}
+else if (digitalRead(PIN_G) == RGB_ON)
+{
+    // Green is on, mode is "ON"
+    mode = 2;
+}
+else
+{
+    // Blue is on, mode is "AUTO"
+    mode = 1;
+}
+]]></Service_Formula>
+					<Service_NumberInputs>0</Service_NumberInputs>
+					<Service_InputTypes></Service_InputTypes>
+					<Service_InputDescriptions></Service_InputDescriptions>
+				</Service_1>
+				<Number_Services>1</Number_Services>
+			</Services>
+			<UnboundedService>
+				<Number_UnboundedServices>0</Number_UnboundedServices>
+			</UnboundedService>
+			<Relationships>
+				<Number_Relationships>0</Number_Relationships>
+			</Relationships>
+		</Entity_3>
+		<Entity_4>
+			<Descriptive_Metadata>
+				<ID>Button_1</ID>
+				<Name></Name>
+				<Owner></Owner>
+				<Vendor></Vendor>
+				<Category></Category>
+				<Type></Type>
+				<Description></Description>
+			</Descriptive_Metadata>
+			<Services>
+				<Service_1>
+					<Name>toggle_mode</Name>
+					<AppCategory>Lighting</AppCategory>
+					<Type>Action</Type>
+					<Keywords></Keywords>
+					<Description>Changes the current mode to a new mode</Description>
+					<Contextual_Constraints>
+						<Time_Window>0seconds</Time_Window>
+						<Usage_Mode></Usage_Mode>
+						<Concurrent></Concurrent>
+					</Contextual_Constraints>
+					<Temporal_Constraints>
+						<Working>
+							<StartTime>12am</StartTime>
+							<EndTime>12am</EndTime>
+						</Working>
+						<Callable>
+							<StartTime>12am</StartTime>
+							<EndTime>12am</EndTime>
+						</Callable>
+					</Temporal_Constraints>
+					<OutputDescription></OutputDescription>
+					<OutputType>void</OutputType>
+					<Service_Formula><![CDATA[
+// ~ Service body C/C++ code block ~
+// You can use the inputs you defined above by name
+// Any return values should match the specified output type
+
+int PIN_R = 5;
+int PIN_G = 6;
+int PIN_B = 13;
+
+int RGB_ON = LOW;
+int RGB_OFF = HIGH;
+
+wiringPiSetupGpio();
+
+switch (new_mode)
+{
+case 0:
+    // turn the RGB LED to OFF_COLOR
+    digitalWrite(PIN_R, RGB_ON);
+    digitalWrite(PIN_G, RGB_OFF);
+    digitalWrite(PIN_B, RGB_OFF);
+    break;
+
+case 1:
+    // turn the RGB LED to AUTO_COLOR
+    digitalWrite(PIN_R, RGB_OFF);
+    digitalWrite(PIN_G, RGB_OFF);
+    digitalWrite(PIN_B, RGB_ON);
+    break;
+
+case 2:
+    // turn the RGB LED to ON_COLOR
+    digitalWrite(PIN_R, RGB_OFF);
+    digitalWrite(PIN_G, RGB_ON);
+    digitalWrite(PIN_B, RGB_OFF);
+    break;
+
+default:
+    // Do nothing
+    break;
+}
+]]></Service_Formula>
+					<Service_NumberInputs>1</Service_NumberInputs>
+					<Service_InputTypes>int</Service_InputTypes>
+					<Service_InputDescriptions>new_mode</Service_InputDescriptions>
+				</Service_1>
+				<Number_Services>1</Number_Services>
+			</Services>
+			<UnboundedService>
+				<Number_UnboundedServices>0</Number_UnboundedServices>
+			</UnboundedService>
+			<Relationships>
+				<Number_Relationships>0</Number_Relationships>
+			</Relationships>
+		</Entity_4>
+	</Atlas_Entities>
+</Atlas_IoTDDL>

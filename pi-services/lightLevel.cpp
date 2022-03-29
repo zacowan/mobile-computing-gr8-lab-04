@@ -1,0 +1,4 @@
+enum LightLevel {
+    LOW,
+    HIGH
+}
