@@ -1,3 +1,28 @@
+/**
+ * @file main.cpp
+ * @author Zach Cowan, Shaun Fidler, Sydney McLaughlin
+ * @brief This file contains the main program for running our "night light"
+ * application on our raspberry pi.
+ *
+ * Our program utilizes 4 devices: a button, a standard LED, a RGB LED, and a
+ * photoresistor with an ADC.
+ *
+ * This program will operate continuously across 3 modes: OFF, AUTO, and ON. In
+ * OFF mode, the standard LED will be set to off. In AUTO mode, the standard LED
+ * will be on or off based on the state of the photoresistor. If the value from
+ * the photoresistor is > 50, the LED will be on and otherwise, will be off. In
+ * ON mode, the standard LED will be set to on. At any time, the button may be
+ * pressed to toggle between the 3 modes (OFF -> AUTO -> ON). Additionally, the
+ * current mode is represented by the color of the RGB LED. RED corresponds to
+ * OFF, BLUE to AUTO, and GREEN to ON.
+ *
+ * @version 0.1
+ * @date 2022-03-29
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
+
 #include <iostream>
 #include <wiringPi.h>
 #include <ADCDevice.hpp>
