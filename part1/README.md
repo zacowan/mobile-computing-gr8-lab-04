@@ -8,7 +8,7 @@ Shaun Fidler, Sydney McLaughlin, Zach Cowan
 
 Our 4 services and the main.cpp file for testing those services is located in
 the `services/` directory. Within each service cpp file, we have detailed comments 
-outlining what each service accomplishes and what means it occurs. In the root 
+outlining what each service accomplishes and by what means it occurs. In the root 
 directory for part 1, we have the supporting code that is run on our pi in addition 
 to Atlas.
 
