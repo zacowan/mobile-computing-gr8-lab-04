@@ -32,3 +32,4 @@ legacy version and installed Atlas. Worked with the team to write services and d
 the various components. 
 
 ### Sydney (33% Relative Contribution)
+Assisted with writing services. Assisted with debugging hardware and services.
