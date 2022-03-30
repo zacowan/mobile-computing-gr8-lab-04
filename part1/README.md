@@ -7,16 +7,16 @@ Shaun Fidler, Sydney McLaughlin, Zach Cowan
 ## Code Explanation
 
 Our 4 services and the main.cpp file for testing those services is located in
-the `services/` directory. Within each service cpp file, we have detailed comments 
-outlining what each service accomplishes and by what means it occurs. In the root 
-directory for part 1, we have the supporting code that is run on our pi in addition 
+the `services/` directory. Within each service cpp file, we have detailed comments
+outlining what each service accomplishes and by what means it occurs. In the root
+directory for part 1, we have the supporting code that is run on our pi in addition
 to Atlas.
 
 ## Description of Effort
 
 All group members worked together on all aspects of the project during group
 meetings. All group members planned out the hardware, hardware setup, and
-services to be offered by each sensor/actuator. All group members worked on the 
+services to be offered by each sensor/actuator. All group members worked on the
 creation of a proper Atlas DDL file
 
 ### Zach (33% Relative Contribution)
@@ -28,10 +28,11 @@ hardware and services.
 
 ### Shaun (33% Relative Contribution)
 
-In addition to above, worked on the wiring of most hardware components and wrote the 
+In addition to above, worked on the wiring of most hardware components and wrote the
 implementation for the light sensor. In addition, reinstalled the Pi OS to the buster
 legacy version and installed Atlas. Worked with the team to write services and debug
-the various components. 
+the various components.
 
 ### Sydney (33% Relative Contribution)
+
 Assisted with writing services. Assisted with debugging hardware and services.
