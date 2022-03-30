@@ -26,3 +26,4 @@ hardware and services.
 ### Shaun (33% Relative Contribution)
 
 ### Sydney (33% Relative Contribution)
+Assisted with writing services. Assisted with debugging hardware and services.
